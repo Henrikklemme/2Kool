@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>2Kool — Modern websites for local businesses</title>
+<meta name="description" content="Scandinavian-inspired website redesigns for restaurants, salons, clinics and local service companies. Fast, affordable, yours to keep." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --background: oklch(0.98 0.008 90);
+    --foreground: oklch(0.22 0.02 160);
+    --card: oklch(0.995 0.005 90);
+    --primary: oklch(0.28 0.035 155);
+    --primary-foreground: oklch(0.98 0.008 90);
+    --secondary: oklch(0.94 0.012 90);
+    --muted-foreground: oklch(0.5 0.015 150);
+    --accent: oklch(0.72 0.06 145);
+    --border: oklch(0.9 0.012 90);
+    --radius: 14px;
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--background);
+    color:var(--foreground);
+    font-family:"Inter", ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+  }
+  .serif{ font-family:"Instrument Serif", ui-serif, Georgia, serif; font-weight:400; letter-spacing:-0.01em; }
+  a{ color:inherit; text-decoration:none; }
+  .wrap{ max-width:1152px; margin:0 auto; padding:0 24px; }
+  .eyebrow{ font-size:12px; text-transform:uppercase; letter-spacing:.2em; color:var(--muted-foreground); }
+  .btn{ display:inline-flex; align-items:center; gap:8px; border-radius:999px; padding:12px 24px; font-size:14px; font-weight:500; transition:opacity .2s, background .2s; white-space:nowrap; }
+  .btn-primary{ background:var(--primary); color:var(--primary-foreground); }
+  .btn-primary:hover{ opacity:.9; }
+  .btn-outline{ border:1px solid color-mix(in oklch, var(--primary) 30%, transparent); color:var(--primary); }
+  .btn-outline:hover{ background:color-mix(in oklch, var(--primary) 5%, transparent); }
+
+  /* ---------- Nav ---------- */
+  header.nav{ position:sticky; top:0; z-index:40; border-bottom:1px solid color-mix(in oklch, var(--border) 60%, transparent); background:color-mix(in oklch, var(--background) 80%, transparent); backdrop-filter:blur(8px); }
+  .nav-inner{ height:64px; display:flex; align-items:center; justify-content:space-between; }
+  .logo{ display:flex; align-items:baseline; gap:8px; }
+  .logo .serif{ font-size:24px; }
+  .logo small{ display:none; font-size:11px; letter-spacing:.2em; color:var(--muted-foreground); }
+  .nav-links{ display:none; align-items:center; gap:32px; font-size:14px; color:var(--muted-foreground); }
+  .nav-links a:hover{ color:var(--foreground); }
+  .nav-right{ display:flex; align-items:center; gap:12px; }
+  .lang-toggle{ display:inline-flex; align-items:center; gap:4px; border:1px solid var(--border); border-radius:999px; padding:4px; }
+  .lang-toggle button{ padding:4px 8px; border:0; background:none; border-radius:999px; font-size:12px; font-weight:500; letter-spacing:.02em; cursor:pointer; color:var(--muted-foreground); font-family:inherit; }
+  .lang-toggle button.active{ background:var(--primary); color:var(--primary-foreground); }
+  @media(min-width:768px){ .logo small{ display:inline; } .nav-links{ display:flex; } .nav-cta{ display:inline-flex !important; } }
+  .nav-cta{ display:none; }
+
+  /* ---------- Section scaffolding ---------- */
+  section{ position:relative; overflow:hidden; }
+  .scene{ position:absolute; inset:0; pointer-events:none; }
+  .veil{ position:absolute; inset:0; pointer-events:none; }
+  .section-inner{ position:relative; }
+
+  /* ---------- Hero ---------- */
+  .hero{ background:var(--background); }
+  .hero-copy{ padding:80px 0 96px; }
+  @media(min-width:768px){ .hero-copy{ padding:128px 0 128px; } }
+  .kicker{ display:flex; align-items:center; gap:12px; font-size:12px; text-transform:uppercase; letter-spacing:.2em; color:color-mix(in oklch, var(--primary) 70%, transparent); }
+  .kicker .line{ height:1px; width:32px; background:color-mix(in oklch, var(--primary) 40%, transparent); }
+  h1.headline{ margin:32px 0 0; max-width:820px; font-size:44px; line-height:1.05; letter-spacing:-0.02em; color:var(--primary); }
+  h1.headline em{ font-style:italic; color:color-mix(in oklch, var(--primary) 55%, transparent); }
+  @media(min-width:768px){ h1.headline{ font-size:68px; } }
+  @media(min-width:1024px){ h1.headline{ font-size:84px; } }
+  .lede{ margin:32px 0 0; max-width:560px; font-size:18px; line-height:1.6; color:color-mix(in oklch, var(--foreground) 75%, transparent); }
+  .cta-row{ margin-top:40px; display:flex; flex-wrap:wrap; align-items:center; gap:16px; }
+  .stats{ margin-top:80px; display:grid; grid-template-columns:repeat(2,1fr); gap:32px; border-top:1px solid color-mix(in oklch, var(--primary) 20%, transparent); padding-top:40px; }
+  @media(min-width:768px){ .stats{ grid-template-columns:repeat(4,1fr); } }
+  .stat dt{ font-size:36px; color:var(--primary); }
+  .stat dd{ margin:8px 0 0; font-size:14px; color:color-mix(in oklch, var(--foreground) 60%, transparent); }
+
+  /* ---------- Intro ---------- */
+  .intro{ border-top:1px solid var(--border); border-bottom:1px solid var(--border); background:color-mix(in oklch, var(--secondary) 40%, transparent); }
+  .intro .section-inner{ padding:96px 0; display:grid; gap:48px; }
+  @media(min-width:768px){ .intro .section-inner{ grid-template-columns:repeat(12,1fr); } .intro .intro-head{ grid-column:span 4; } .intro .intro-body{ grid-column:span 8; } }
+  .intro-head h2{ margin:16px 0 0; font-size:30px; line-height:1.2; }
+  @media(min-width:768px){ .intro-head h2{ font-size:36px; } }
+  .intro-body{ display:flex; flex-direction:column; gap:24px; font-size:18px; line-height:1.7; color:color-mix(in oklch, var(--foreground) 80%, transparent); }
+  .intro-body p:last-child{ color:var(--foreground); }
+
+  /* ---------- Services ---------- */
+  .services .section-inner{ padding:112px 0; }
+  .services-head h2{ margin:16px 0 0; max-width:640px; font-size:34px; line-height:1.2; }
+  @media(min-width:768px){ .services-head h2{ font-size:44px; } }
+  .services-grid{ margin-top:64px; display:grid; gap:1px; border-radius:16px; overflow:hidden; border:1px solid var(--border); background:var(--border); }
+  @media(min-width:768px){ .services-grid{ grid-template-columns:1fr 1fr; } }
+  .service-card{ background:var(--background); padding:40px; }
+  .service-num-row{ display:flex; align-items:baseline; gap:16px; color:var(--muted-foreground); }
+  .service-num-row .serif{ font-size:24px; }
+  .service-num-row .rule{ height:1px; flex:1; background:var(--border); }
+  .service-card h3{ margin:24px 0 0; font-size:24px; }
+  .service-card p{ margin:16px 0 0; color:var(--muted-foreground); }
+
+  /* ---------- Process ---------- */
+  .process{ border-top:1px solid var(--border); border-bottom:1px solid var(--border); background:color-mix(in oklch, var(--secondary) 50%, transparent); }
+  .process .section-inner{ padding:112px 0; }
+  .process-head h2{ margin:16px 0 0; max-width:720px; font-size:34px; line-height:1.2; color:var(--primary); }
+  @media(min-width:768px){ .process-head h2{ font-size:44px; } }
+  .process-list{ margin:64px 0 0; padding:0; list-style:none; display:grid; gap:40px; }
+  @media(min-width:768px){ .process-list{ grid-template-columns:repeat(4,1fr); } }
+  .process-list li{ border-top:1px solid color-mix(in oklch, var(--primary) 20%, transparent); padding-top:24px; }
+  .process-list .num{ font-size:30px; color:color-mix(in oklch, var(--primary) 60%, transparent); }
+  .process-list h3{ margin:16px 0 0; font-size:24px; color:var(--primary); }
+  .process-list p{ margin:12px 0 0; font-size:14px; line-height:1.6; color:color-mix(in oklch, var(--foreground) 70%, transparent); }
+
+  /* ---------- Philosophy ---------- */
+  .philosophy .section-inner{ padding:112px 0; display:grid; gap:64px; }
+  @media(min-width:768px){ .philosophy .section-inner{ grid-template-columns:repeat(12,1fr); } .philosophy-head{ grid-column:span 5; } .philosophy-values{ grid-column:span 7; } }
+  .philosophy-head h2{ margin:16px 0 0; font-size:34px; line-height:1.2; color:var(--primary); }
+  @media(min-width:768px){ .philosophy-head h2{ font-size:44px; } }
+  .philosophy-head p{ margin-top:24px; color:color-mix(in oklch, var(--foreground) 75%, transparent); line-height:1.7; }
+  .philosophy-values{ display:grid; grid-template-columns:1fr; gap:12px; padding:0; margin:0; list-style:none; }
+  @media(min-width:640px){ .philosophy-values{ grid-template-columns:1fr 1fr; } }
+  .philosophy-values li{ display:flex; align-items:center; gap:16px; border:1px solid color-mix(in oklch, var(--primary) 15%, transparent); background:color-mix(in oklch, var(--background) 70%, transparent); border-radius:10px; padding:24px; font-size:18px; }
+  .icon-badge{ display:flex; height:40px; width:40px; flex-shrink:0; align-items:center; justify-content:center; border-radius:999px; border:1px solid color-mix(in oklch, var(--primary) 25%, transparent); background:color-mix(in oklch, var(--primary) 5%, transparent); color:var(--primary); }
+  .philosophy-values span.serif{ color:var(--primary); }
+
+  /* ---------- Pricing ---------- */
+  .pricing{ border-top:1px solid var(--border); border-bottom:1px solid var(--border); background:color-mix(in oklch, var(--secondary) 40%, transparent); }
+  .pricing .section-inner{ padding:112px 0; }
+  .pricing-box{ max-width:720px; }
+  .pricing-box h2{ margin:16px 0 0; font-size:34px; line-height:1.2; }
+  @media(min-width:768px){ .pricing-box h2{ font-size:44px; } }
+  .pricing-box .body{ margin-top:24px; max-width:600px; color:var(--muted-foreground); }
+  .pricing-box .body .hl{ font-weight:600; color:var(--foreground); }
+  .feature-list{ margin:32px 0 0; padding:0; list-style:none; display:grid; gap:12px; font-size:14px; }
+  @media(min-width:640px){ .feature-list{ grid-template-columns:1fr 1fr; } }
+  .feature-list li{ display:flex; align-items:flex-start; gap:12px; }
+  .feature-list .dot{ margin-top:8px; height:6px; width:6px; border-radius:999px; background:var(--accent); flex-shrink:0; }
+
+  /* ---------- Founders ---------- */
+  .founders .section-inner{ padding:112px 0; }
+  .founders-head h2{ margin:16px 0 0; max-width:720px; font-size:34px; line-height:1.2; }
+  @media(min-width:768px){ .founders-head h2{ font-size:44px; } }
+  .founders-grid{ margin-top:64px; display:grid; gap:40px; }
+  @media(min-width:768px){ .founders-grid{ grid-template-columns:1fr 1fr; } }
+  .founder-card{ border-radius:16px; border:1px solid var(--border); background:var(--card); padding:40px; }
+  .founder-top{ display:flex; align-items:center; gap:16px; }
+  .avatar{ height:64px; width:64px; flex-shrink:0; border-radius:999px; display:flex; align-items:center; justify-content:center; font-family:"Instrument Serif",serif; font-size:24px; color:var(--primary-foreground); background:linear-gradient(135deg, var(--primary), color-mix(in oklch, var(--primary) 60%, var(--accent))); }
+  .founder-name{ margin:0; font-size:24px; font-family:"Instrument Serif",serif; }
+  .founder-role{ margin:4px 0 0; font-size:14px; color:var(--muted-foreground); }
+  .founder-card .bio{ margin:24px 0 0; line-height:1.7; color:color-mix(in oklch, var(--foreground) 80%, transparent); }
+
+  /* ---------- CTA ---------- */
+  .cta-section{ border-top:1px solid var(--border); background:var(--background); }
+  .cta-section .section-inner{ padding:112px 0; text-align:center; }
+  .cta-section h2{ margin:24px auto 0; max-width:720px; font-size:40px; line-height:1.05; color:var(--primary); }
+  @media(min-width:768px){ .cta-section h2{ font-size:64px; } }
+  .cta-section .lede2{ margin:24px auto 0; max-width:560px; color:color-mix(in oklch, var(--foreground) 70%, transparent); }
+  .cta-buttons{ margin-top:40px; display:flex; flex-wrap:wrap; justify-content:center; gap:16px; }
+
+  /* ---------- Footer ---------- */
+  footer{ border-top:1px solid var(--border); background:var(--background); }
+  footer .section-inner{ padding:40px 0; display:flex; flex-direction:column; gap:24px; font-size:14px; color:var(--muted-foreground); }
+  @media(min-width:768px){ footer .section-inner{ flex-direction:row; align-items:center; justify-content:space-between; } }
+  footer .brand{ display:flex; align-items:baseline; gap:8px; }
+  footer .brand .serif{ font-size:20px; color:var(--foreground); }
+
+  /* ---------- Decorative scenes (stand-ins for photography) ---------- */
+  .scene svg{ width:100%; height:100%; }
+  .scene-img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="#top" class="logo"><span class="serif">2Kool</span><small>STUDIO</small></a>
+    <nav class="nav-links">
+      <a href="#services" data-i18n="nav.services">Services</a>
+      <a href="#process" data-i18n="nav.process">Process</a>
+      <a href="#pricing" data-i18n="nav.pricing">Pricing</a>
+      <a href="#founders" data-i18n="nav.founders">Founders</a>
+    </nav>
+    <div class="nav-right">
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <button type="button" data-lang="en" class="active">EN</button>
+        <button type="button" data-lang="da">DA</button>
+      </div>
+      <a href="#contact" class="btn btn-primary nav-cta" data-i18n="nav.cta">Get a proposal</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section id="top" class="hero">
+    <img src="images/forest.jpg" alt="" aria-hidden="true" loading="eager" class="scene-img" style="opacity:.70">
+    <div class="veil" style="background:color-mix(in oklch, var(--background) 45%, transparent)"></div>
+    <div class="veil" style="background:linear-gradient(to bottom, color-mix(in oklch, var(--background) 30%, transparent), color-mix(in oklch, var(--background) 45%, transparent) 60%, var(--background))"></div>
+    <div class="wrap section-inner hero-copy">
+      <div class="kicker"><span class="line"></span><span data-i18n="hero.eyebrow">Copenhagen · Est. 2026</span></div>
+      <h1 class="headline"><span data-i18n="hero.title.a">Modern websites for local businesses —</span> <em data-i18n="hero.title.b">without agency prices.</em></h1>
+      <p class="lede" data-i18n="hero.body">Your business deserves a website that reflects the quality of your work. We build beautiful Scandinavian-inspired sites for restaurants, salons, clinics and local service companies — fast, affordable, and yours to keep.</p>
+      <div class="cta-row">
+        <a href="#contact" class="btn btn-primary"><span data-i18n="hero.cta.primary">Request a redesign preview</span> <span aria-hidden="true">→</span></a>
+        <a href="#process" class="btn btn-outline" data-i18n="hero.cta.secondary">See how it works</a>
+      </div>
+      <dl class="stats">
+        <div class="stat"><dt class="serif" data-i18n="hero.stat.1.n">10+</dt><dd data-i18n="hero.stat.1.l">years in consulting & tech</dd></div>
+        <div class="stat"><dt class="serif" data-i18n="hero.stat.2.n">1 week</dt><dd data-i18n="hero.stat.2.l">typical delivery</dd></div>
+        <div class="stat"><dt class="serif" data-i18n="hero.stat.3.n">50–80%</dt><dd data-i18n="hero.stat.3.l">less than agency cost</dd></div>
+        <div class="stat"><dt class="serif" data-i18n="hero.stat.4.n">100%</dt><dd data-i18n="hero.stat.4.l">you own the site</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- INTRO -->
+  <section class="intro">
+    <img src="images/city.jpg" alt="" aria-hidden="true" loading="lazy" class="scene-img" style="opacity:.25">
+    <div class="veil" style="background:color-mix(in oklch, var(--background) 80%, transparent)"></div>
+    <div class="veil" style="background:linear-gradient(to bottom, color-mix(in oklch, var(--background) 70%, transparent), color-mix(in oklch, var(--background) 80%, transparent) 60%, color-mix(in oklch, var(--background) 90%, transparent))"></div>
+    <div class="wrap section-inner">
+      <div class="intro-head">
+        <p class="eyebrow" data-i18n="intro.eyebrow">The problem</p>
+        <h2 class="serif" data-i18n="intro.title">Great businesses, tired websites.</h2>
+      </div>
+      <div class="intro-body">
+        <p data-i18n="intro.p1">Running a business is demanding. Whether you own a restaurant, salon, café, clinic or local service company, your focus is on serving customers — not managing websites.</p>
+        <p data-i18n="intro.p2">What looked modern a few years ago quickly becomes outdated, and potential customers choose a competitor with a more professional online presence — even when your service is actually better.</p>
+        <p data-i18n="intro.p3">That's where 2Kool comes in. We modernize your website quickly, affordably, and with almost no effort from you.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" class="services">
+    <img src="images/fjord.jpg" alt="" aria-hidden="true" loading="lazy" class="scene-img" style="opacity:.40">
+    <div class="veil" style="background:color-mix(in oklch, var(--background) 55%, transparent)"></div>
+    <div class="veil" style="background:linear-gradient(to bottom, color-mix(in oklch, var(--background) 60%, transparent), color-mix(in oklch, var(--background) 50%, transparent) 50%, color-mix(in oklch, var(--background) 70%, transparent))"></div>
+    <div class="wrap section-inner">
+      <div class="services-head">
+        <p class="eyebrow" data-i18n="services.eyebrow">What we do</p>
+        <h2 class="serif" data-i18n="services.title">Focused work, delivered end to end.</h2>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-num-row"><span class="serif">01</span><span class="rule"></span></div>
+          <h3 class="serif" data-i18n="services.1.t">Website redesign</h3>
+          <p data-i18n="services.1.d">A complete visual and structural refresh of your existing website — same content, dramatically better presentation.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-num-row"><span class="serif">02</span><span class="rule"></span></div>
+          <h3 class="serif" data-i18n="services.2.t">New website build</h3>
+          <p data-i18n="services.2.d">Starting fresh. We design and build a modern site tailored to your business, industry and customers.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-num-row"><span class="serif">03</span><span class="rule"></span></div>
+          <h3 class="serif" data-i18n="services.3.t">Mobile-first polish</h3>
+          <p data-i18n="services.3.d">Most of your customers arrive on a phone. Every site we deliver looks and feels made for mobile first.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-num-row"><span class="serif">04</span><span class="rule"></span></div>
+          <h3 class="serif" data-i18n="services.4.t">Handover & ownership</h3>
+          <p data-i18n="services.4.d">No subscriptions, no lock-in. You receive the finished site and own it completely.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process" class="process">
+    <div class="wrap section-inner">
+      <p class="eyebrow" style="color:color-mix(in oklch, var(--primary) 70%, transparent)" data-i18n="process.eyebrow">Process</p>
+      <h2 class="serif" data-i18n="process.title">Four steps. No long projects, no committee meetings.</h2>
+      <ol class="process-list">
+        <li><div class="num serif">01</div><h3 class="serif" data-i18n="process.1.t">Review</h3><p data-i18n="process.1.d">We audit your current website — content, structure, brand and where it's losing customers.</p></li>
+        <li><div class="num serif">02</div><h3 class="serif" data-i18n="process.2.t">Design</h3><p data-i18n="process.2.d">You receive a modern redesign proposal tailored to your business and industry.</p></li>
+        <li><div class="num serif">03</div><h3 class="serif" data-i18n="process.3.t">Build</h3><p data-i18n="process.3.d">We build the new website using modern AI-powered tools, and iterate quickly with you.</p></li>
+        <li><div class="num serif">04</div><h3 class="serif" data-i18n="process.4.t">Handover</h3><p data-i18n="process.4.d">The finished site is delivered to you. You own it. No subscriptions, no ongoing contracts.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- PHILOSOPHY -->
+  <section class="philosophy">
+    <img src="images/architecture.jpg" alt="" aria-hidden="true" loading="lazy" class="scene-img" style="opacity:.65">
+    <div class="veil" style="background:color-mix(in oklch, var(--background) 50%, transparent)"></div>
+    <div class="veil" style="background:linear-gradient(to bottom, color-mix(in oklch, var(--background) 55%, transparent), color-mix(in oklch, var(--background) 40%, transparent) 50%, color-mix(in oklch, var(--background) 70%, transparent))"></div>
+    <div class="wrap section-inner">
+      <div class="philosophy-head">
+        <p class="eyebrow" style="color:color-mix(in oklch, var(--primary) 70%, transparent)" data-i18n="philosophy.eyebrow">Design philosophy</p>
+        <h2 class="serif" data-i18n="philosophy.title">Quiet. Confident. Built to convert.</h2>
+        <p data-i18n="philosophy.body">We believe a great website should feel effortless — like walking into a well-designed shop. Clear signage, honest materials, nothing shouting. The result is a professional online presence that makes it easy for customers to choose your business.</p>
+      </div>
+      <ul class="philosophy-values">
+        <li><span class="icon-badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="5" y1="12" x2="19" y2="12"/></svg></span><span class="serif" data-i18n="philosophy.1">Simple</span></li>
+        <li><span class="icon-badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M18 6l-2.5 2.5M8.5 15.5L6 18"/></svg></span><span class="serif" data-i18n="philosophy.2">Modern</span></li>
+        <li><span class="icon-badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M15 9l-2 6-6 2 2-6z"/></svg></span><span class="serif" data-i18n="philosophy.3">Easy to navigate</span></li>
+        <li><span class="icon-badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="7" y="2" width="10" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/></svg></span><span class="serif" data-i18n="philosophy.4">Mobile-friendly</span></li>
+        <li><span class="icon-badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 20l6-11 4 6 2-3 6 8z"/></svg></span><span class="serif" data-i18n="philosophy.5">Rooted in Scandinavian design</span></li>
+        <li><span class="icon-badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 20c-5-1-8-5-8-11 6 0 10 3 11 8 1-5 5-8 11-8 0 6-3 10-8 11-1-3-2-5-3-8-1 3-2 5-3 8z"/></svg></span><span class="serif" data-i18n="philosophy.6">Focused on nature, clarity and trust</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing" class="pricing">
+    <img src="images/coast.jpg" alt="" aria-hidden="true" loading="lazy" class="scene-img" style="opacity:.55">
+    <div class="veil" style="background:color-mix(in oklch, var(--background) 55%, transparent)"></div>
+    <div class="veil" style="background:linear-gradient(to bottom, color-mix(in oklch, var(--background) 60%, transparent), color-mix(in oklch, var(--background) 45%, transparent) 50%, color-mix(in oklch, var(--background) 70%, transparent))"></div>
+    <div class="wrap section-inner">
+      <div class="pricing-box">
+        <p class="eyebrow" data-i18n="pricing.eyebrow">Value</p>
+        <h2 class="serif" data-i18n="pricing.title">Professional websites at a fraction of the traditional cost.</h2>
+        <p class="body"><span data-i18n="pricing.body.a">Traditional Danish agencies charge 10,000–50,000 DKK for a redesign. Thanks to modern AI-powered tools and a lean delivery model, we deliver stunning results significantly faster — and for </span><span class="hl" data-i18n="pricing.body.highlight">50–80% less</span><span data-i18n="pricing.body.b">. Refresh your site whenever you need to, not once a decade.</span></p>
+        <ul class="feature-list">
+          <li><span class="dot"></span><span data-i18n="pricing.f1">No subscriptions</span></li>
+          <li><span class="dot"></span><span data-i18n="pricing.f2">No lock-in</span></li>
+          <li><span class="dot"></span><span data-i18n="pricing.f3">You own the finished site</span></li>
+          <li><span class="dot"></span><span data-i18n="pricing.f4">Delivered in ~1 week</span></li>
+        </ul>
+        <a href="#contact" class="btn btn-primary" style="margin-top:40px"><span data-i18n="pricing.cta">Get a no-obligation proposal</span> <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOUNDERS -->
+  <section id="founders" class="founders">
+    <img src="images/cafe.jpg" alt="" aria-hidden="true" loading="lazy" class="scene-img" style="opacity:.50">
+    <div class="veil" style="background:color-mix(in oklch, var(--background) 55%, transparent)"></div>
+    <div class="veil" style="background:linear-gradient(to bottom, color-mix(in oklch, var(--background) 60%, transparent), color-mix(in oklch, var(--background) 45%, transparent) 50%, color-mix(in oklch, var(--background) 70%, transparent))"></div>
+    <div class="wrap section-inner">
+      <div class="founders-head">
+        <p class="eyebrow" data-i18n="founders.eyebrow">Founders</p>
+        <h2 class="serif" data-i18n="founders.title">Built by two consultants who got tired of watching great businesses lose customers to outdated websites.</h2>
+      </div>
+      <div class="founders-grid">
+        <article class="founder-card">
+          <div class="founder-top">
+            <img class="avatar" src="images/birgit.jpg" alt="Birgit Kool" width="64" height="64" style="object-fit:cover;object-position:center;">
+            <div>
+              <h3 class="founder-name">Birgit Kool</h3>
+              <p class="founder-role"><span data-i18n="founders.role">Co-founder</span> · <span data-i18n="founders.location">Copenhagen</span></p>
+            </div>
+          </div>
+          <p class="bio" data-i18n="founders.birgit.bio">Consultant with around five years in management consulting, technology and digital transformation. Founder of a sustainability-driven sportswear brand serving customers in more than 20 countries, and a hands-on operator who has built the digital tools behind it end to end.</p>
+        </article>
+        <article class="founder-card">
+          <div class="founder-top">
+            <img class="avatar" src="images/henrik.png" alt="Henrik Klemmensen" width="64" height="64" style="object-fit:cover;object-position:50% 20%;">
+            <div>
+              <h3 class="founder-name">Henrik Klemmensen</h3>
+              <p class="founder-role"><span data-i18n="founders.role">Co-founder</span> · <span data-i18n="founders.location">Copenhagen</span></p>
+            </div>
+          </div>
+          <p class="bio" data-i18n="founders.henrik.bio">Management consultant with around five years focused on strategic sourcing and supply chain transformation for some of the largest companies in the Nordics. Brings a structured, no-nonsense approach to every project — scoping tightly, delivering on time and making sure the result actually works for the business.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="contact" class="cta-section">
+    <img src="images/nature.jpg" alt="" aria-hidden="true" loading="lazy" class="scene-img" style="opacity:.65">
+    <div class="veil" style="background:color-mix(in oklch, var(--background) 45%, transparent)"></div>
+    <div class="veil" style="background:linear-gradient(to bottom, color-mix(in oklch, var(--background) 40%, transparent), color-mix(in oklch, var(--background) 45%, transparent) 60%, var(--background))"></div>
+    <div class="wrap section-inner">
+      <p class="eyebrow" style="color:color-mix(in oklch, var(--primary) 70%, transparent)" data-i18n="cta.eyebrow">Get in touch</p>
+      <h2 class="serif" data-i18n="cta.title">Ready for a website that matches the quality of your business?</h2>
+      <p class="lede2" data-i18n="cta.body">Send us your current website and we'll come back with a no-obligation proposal for a modern redesign — usually within a couple of days.</p>
+      <div class="cta-buttons">
+        <a href="mailto:hello@2kool.dk" class="btn btn-primary">hello@2kool.dk</a>
+        <a href="#top" class="btn btn-outline" data-i18n="cta.back">Back to top</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap section-inner">
+    <div class="brand"><span class="serif">2Kool</span><span>· <span data-i18n="footer.tag">Copenhagen · Scandinavian-inspired websites</span></span></div>
+    <p>© <span id="year"></span> 2Kool. <span data-i18n="footer.rights">All rights reserved.</span></p>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  var dict = {
+    en: {
+      "nav.services":"Services","nav.process":"Process","nav.pricing":"Pricing","nav.founders":"Founders","nav.cta":"Get a proposal",
+      "hero.eyebrow":"Copenhagen · Est. 2026",
+      "hero.title.a":"Modern websites for local businesses —","hero.title.b":"without agency prices.",
+      "hero.body":"Your business deserves a website that reflects the quality of your work. We build beautiful Scandinavian-inspired sites for restaurants, salons, clinics and local service companies — fast, affordable, and yours to keep.",
+      "hero.cta.primary":"Request a redesign preview","hero.cta.secondary":"See how it works",
+      "hero.stat.1.n":"10+","hero.stat.1.l":"years in consulting & tech",
+      "hero.stat.2.n":"1 week","hero.stat.2.l":"typical delivery",
+      "hero.stat.3.n":"50–80%","hero.stat.3.l":"less than agency cost",
+      "hero.stat.4.n":"100%","hero.stat.4.l":"you own the site",
+      "intro.eyebrow":"The problem","intro.title":"Great businesses, tired websites.",
+      "intro.p1":"Running a business is demanding. Whether you own a restaurant, salon, café, clinic or local service company, your focus is on serving customers — not managing websites.",
+      "intro.p2":"What looked modern a few years ago quickly becomes outdated, and potential customers choose a competitor with a more professional online presence — even when your service is actually better.",
+      "intro.p3":"That's where 2Kool comes in. We modernize your website quickly, affordably, and with almost no effort from you.",
+      "services.eyebrow":"What we do","services.title":"Focused work, delivered end to end.",
+      "services.1.t":"Website redesign","services.1.d":"A complete visual and structural refresh of your existing website — same content, dramatically better presentation.",
+      "services.2.t":"New website build","services.2.d":"Starting fresh. We design and build a modern site tailored to your business, industry and customers.",
+      "services.3.t":"Mobile-first polish","services.3.d":"Most of your customers arrive on a phone. Every site we deliver looks and feels made for mobile first.",
+      "services.4.t":"Handover & ownership","services.4.d":"No subscriptions, no lock-in. You receive the finished site and own it completely.",
+      "process.eyebrow":"Process","process.title":"Four steps. No long projects, no committee meetings.",
+      "process.1.t":"Review","process.1.d":"We audit your current website — content, structure, brand and where it's losing customers.",
+      "process.2.t":"Design","process.2.d":"You receive a modern redesign proposal tailored to your business and industry.",
+      "process.3.t":"Build","process.3.d":"We build the new website using modern AI-powered tools, and iterate quickly with you.",
+      "process.4.t":"Handover","process.4.d":"The finished site is delivered to you. You own it. No subscriptions, no ongoing contracts.",
+      "philosophy.eyebrow":"Design philosophy","philosophy.title":"Quiet. Confident. Built to convert.",
+      "philosophy.body":"We believe a great website should feel effortless — like walking into a well-designed shop. Clear signage, honest materials, nothing shouting. The result is a professional online presence that makes it easy for customers to choose your business.",
+      "philosophy.1":"Simple","philosophy.2":"Modern","philosophy.3":"Easy to navigate","philosophy.4":"Mobile-friendly","philosophy.5":"Rooted in Scandinavian design","philosophy.6":"Focused on nature, clarity and trust",
+      "pricing.eyebrow":"Value","pricing.title":"Professional websites at a fraction of the traditional cost.",
+      "pricing.body.a":"Traditional Danish agencies charge 10,000–50,000 DKK for a redesign. Thanks to modern AI-powered tools and a lean delivery model, we deliver stunning results significantly faster — and for ",
+      "pricing.body.highlight":"50–80% less","pricing.body.b":". Refresh your site whenever you need to, not once a decade.",
+      "pricing.f1":"No subscriptions","pricing.f2":"No lock-in","pricing.f3":"You own the finished site","pricing.f4":"Delivered in ~1 week",
+      "pricing.cta":"Get a no-obligation proposal",
+      "founders.eyebrow":"Founders","founders.title":"Built by two consultants who got tired of watching great businesses lose customers to outdated websites.",
+      "founders.role":"Co-founder","founders.location":"Copenhagen",
+      "founders.birgit.bio":"Consultant with around five years in management consulting, technology and digital transformation. Founder of a sustainability-driven sportswear brand serving customers in more than 20 countries, and a hands-on operator who has built the digital tools behind it end to end.",
+      "founders.henrik.bio":"Management consultant with around five years focused on strategic sourcing and supply chain transformation for some of the largest companies in the Nordics. Brings a structured, no-nonsense approach to every project — scoping tightly, delivering on time and making sure the result actually works for the business.",
+      "cta.eyebrow":"Get in touch","cta.title":"Ready for a website that matches the quality of your business?",
+      "cta.body":"Send us your current website and we'll come back with a no-obligation proposal for a modern redesign — usually within a couple of days.",
+      "cta.back":"Back to top",
+      "footer.rights":"All rights reserved.","footer.tag":"Copenhagen · Scandinavian-inspired websites"
+    },
+    da: {
+      "nav.services":"Ydelser","nav.process":"Proces","nav.pricing":"Pris","nav.founders":"Stiftere","nav.cta":"Få et tilbud",
+      "hero.eyebrow":"København · Grundlagt 2026",
+      "hero.title.a":"Moderne hjemmesider til lokale virksomheder —","hero.title.b":"uden bureaupriser.",
+      "hero.body":"Din virksomhed fortjener en hjemmeside, der afspejler kvaliteten af dit arbejde. Vi bygger smukke, skandinavisk-inspirerede sites til restauranter, saloner, klinikker og lokale servicevirksomheder — hurtigt, prisvenligt og din egen.",
+      "hero.cta.primary":"Bed om et redesign-oplæg","hero.cta.secondary":"Se hvordan det fungerer",
+      "hero.stat.1.n":"10+","hero.stat.1.l":"års erfaring i rådgivning & tech",
+      "hero.stat.2.n":"1 uge","hero.stat.2.l":"typisk leveringstid",
+      "hero.stat.3.n":"50–80%","hero.stat.3.l":"billigere end et bureau",
+      "hero.stat.4.n":"100%","hero.stat.4.l":"du ejer hjemmesiden",
+      "intro.eyebrow":"Problemet","intro.title":"Gode virksomheder, trætte hjemmesider.",
+      "intro.p1":"At drive virksomhed er krævende. Uanset om du ejer en restaurant, salon, café, klinik eller lokal servicevirksomhed, er dit fokus på kunderne — ikke på at vedligeholde en hjemmeside.",
+      "intro.p2":"Det, der virkede moderne for få år siden, bliver hurtigt forældet, og potentielle kunder vælger en konkurrent med en mere professionel online tilstedeværelse — også selvom din service faktisk er bedre.",
+      "intro.p3":"Det er her 2Kool kommer ind. Vi moderniserer din hjemmeside hurtigt, prisvenligt og næsten uden indsats fra dig.",
+      "services.eyebrow":"Det vi laver","services.title":"Fokuseret arbejde, leveret hele vejen.",
+      "services.1.t":"Redesign af hjemmeside","services.1.d":"Et fuldt visuelt og strukturelt løft af din eksisterende hjemmeside — samme indhold, markant bedre præsentation.",
+      "services.2.t":"Ny hjemmeside","services.2.d":"Vi starter forfra og bygger en moderne hjemmeside skræddersyet til din virksomhed, branche og dine kunder.",
+      "services.3.t":"Mobile-first","services.3.d":"De fleste af dine kunder kommer fra en mobil. Alle sites, vi leverer, er designet til mobilen først.",
+      "services.4.t":"Overdragelse & ejerskab","services.4.d":"Ingen abonnementer, ingen binding. Du får den færdige side og ejer den fuldt ud.",
+      "process.eyebrow":"Proces","process.title":"Fire trin. Ingen lange projekter, ingen styregrupper.",
+      "process.1.t":"Gennemgang","process.1.d":"Vi gennemgår din nuværende hjemmeside — indhold, struktur, brand og hvor du mister kunder.",
+      "process.2.t":"Design","process.2.d":"Du modtager et moderne redesign-oplæg tilpasset din virksomhed og branche.",
+      "process.3.t":"Byg","process.3.d":"Vi bygger den nye hjemmeside med moderne AI-drevne værktøjer og itererer hurtigt sammen med dig.",
+      "process.4.t":"Overdragelse","process.4.d":"Den færdige side leveres til dig. Du ejer den. Ingen abonnementer, ingen løbende aftaler.",
+      "philosophy.eyebrow":"Designfilosofi","philosophy.title":"Rolig. Tillidsvækkende. Bygget til at konvertere.",
+      "philosophy.body":"En god hjemmeside skal føles ubesværet — som at træde ind i en velindrettet butik. Tydelig skiltning, ærlige materialer, intet der råber. Resultatet er en professionel online tilstedeværelse, der gør det nemt for kunderne at vælge dig.",
+      "philosophy.1":"Enkelt","philosophy.2":"Moderne","philosophy.3":"Nem at navigere","philosophy.4":"Mobilvenligt","philosophy.5":"Rodfæstet i skandinavisk design","philosophy.6":"Fokus på natur, klarhed og tillid",
+      "pricing.eyebrow":"Værdi","pricing.title":"Professionelle hjemmesider til en brøkdel af den normale pris.",
+      "pricing.body.a":"Traditionelle danske bureauer tager 10.000–50.000 DKK for et redesign. Takket være moderne AI-drevne værktøjer og en effektiv leveringsmodel leverer vi flotte resultater markant hurtigere — og ",
+      "pricing.body.highlight":"50–80% billigere","pricing.body.b":". Opdater din side, når du har brug for det, ikke kun én gang i årtiet.",
+      "pricing.f1":"Ingen abonnementer","pricing.f2":"Ingen binding","pricing.f3":"Du ejer den færdige side","pricing.f4":"Leveret på ca. 1 uge",
+      "pricing.cta":"Få et uforpligtende tilbud",
+      "founders.eyebrow":"Stiftere","founders.title":"Bygget af to konsulenter, der var trætte af at se gode virksomheder miste kunder til forældede hjemmesider.",
+      "founders.role":"Medstifter","founders.location":"København",
+      "founders.birgit.bio":"Konsulent med cirka fem års erfaring inden for management consulting, teknologi og digital transformation. Grundlægger af et bæredygtighedsdrevet sportstøjsbrand med kunder i mere end 20 lande — og en praktisk operatør, der selv har bygget de digitale værktøjer bag det hele.",
+      "founders.henrik.bio":"Management consultant med cirka fem års erfaring inden for strategisk indkøb og supply chain-transformation for nogle af de største virksomheder i Norden. Har en struktureret og ligefrem tilgang til hvert projekt — skarpt scope, levering til tiden og en løsning, der reelt virker for forretningen.",
+      "cta.eyebrow":"Kontakt os","cta.title":"Klar til en hjemmeside, der matcher kvaliteten af din virksomhed?",
+      "cta.body":"Send os din nuværende hjemmeside, og vi vender tilbage med et uforpligtende oplæg til et moderne redesign — typisk inden for få dage.",
+      "cta.back":"Til toppen",
+      "footer.rights":"Alle rettigheder forbeholdes.","footer.tag":"København · Skandinavisk-inspirerede hjemmesider"
+    }
+  };
+
+  function applyLang(lang){
+    var d = dict[lang] || dict.en;
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      var key = el.getAttribute('data-i18n');
+      if (d[key] != null) el.textContent = d[key];
+    });
+    document.querySelectorAll('.lang-toggle button').forEach(function(btn){
+      btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+    });
+    try { window.localStorage.setItem('2kool.lang', lang); } catch(e){}
+  }
+
+  document.querySelectorAll('.lang-toggle button').forEach(function(btn){
+    btn.addEventListener('click', function(){ applyLang(btn.getAttribute('data-lang')); });
+  });
+
+  (function init(){
+    var lang = 'en';
+    try {
+      var saved = window.localStorage.getItem('2kool.lang');
+      if (saved === 'en' || saved === 'da') lang = saved;
+      else if ((navigator.language||'').toLowerCase().indexOf('da') === 0) lang = 'da';
+    } catch(e){}
+    applyLang(lang);
+  })();
+</script>
+</body>
+</html>
