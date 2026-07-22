@@ -4,15 +4,12 @@
   <meta charset="utf-8">
   <script>
     var path = window.location.pathname;
-    // Only redirect if it's a 2Kool route, not an asset
-    if (path.match(/\.(jpg|png|js|css|ico|webp|svg)$/)) {
-      // It's a missing asset - don't redirect, just show nothing
-    } else {
+    if (!path.match(/\.(jpg|png|js|css|ico|webp|svg)$/)) {
       var route = path.replace(/^\/2Kool/, '') || '/';
       if (route !== '/' && route !== '') {
         sessionStorage.setItem('redirect', route);
       }
-      window.location.replace('/2Kool/index.html');
+      window.location.replace('/2Kool/');
     }
   </script>
 </head>
