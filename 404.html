@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script>
+    // GitHub Pages SPA redirect trick
+    // Saves the path to sessionStorage and redirects to index
+    var path = window.location.pathname;
+    var search = window.location.search;
+    var hash = window.location.hash;
+    sessionStorage.setItem('redirect', path + search + hash);
+    window.location.replace('/2Kool/');
+  </script>
+</head>
+<body></body>
+</html>
