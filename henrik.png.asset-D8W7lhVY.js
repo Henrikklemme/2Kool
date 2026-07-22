@@ -1,0 +1,1 @@
+var e={asset_id:`99f1e78a-173a-423a-a5d5-2c3685ff50c4`,content_type:`image/png`,created_at:`2026-07-20T14:56:45Z`,original_filename:`henrik.png`,project_id:`96b2264d-76b8-46fa-9998-87bf0439db0e`,r2_key:`a/v1/96b2264d-76b8-46fa-9998-87bf0439db0e/99f1e78a-173a-423a-a5d5-2c3685ff50c4/henrik.png`,size:362169,url:`/2Kool/henrik.png`,version:1};export{e as t};
